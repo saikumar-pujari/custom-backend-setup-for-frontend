@@ -1,0 +1,21 @@
+/admin_class(CRUD)
+/api
+/DRF
+/fastapi
+/main_files
+/marketplace
+/tailwindcss
+/PRT_EVT
+/test11
+/test12
+*.txt
+*.py
+# *.md
+*.conf
+*.pdf
+dockerfile
+.dockerignore
+*.env
+*.sqlite3
+/__pycache__
+/migrations
