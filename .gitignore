@@ -9,8 +9,7 @@
 /test11
 /test12
 *.txt
-*.py
-# *.md
+*.md
 *.conf
 *.pdf
 dockerfile
@@ -19,3 +18,4 @@ dockerfile
 *.sqlite3
 /__pycache__
 /migrations
+test.py
