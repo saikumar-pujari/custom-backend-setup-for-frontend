@@ -21,3 +21,13 @@ __pycache__/
 *$py.class
 migrations/
 test.py
+*.sh
+redis/
+nginx/
+Notes/
+*.bat
+*.js
+
+# Do not ignore anything inside Movies
+!Movies/
+!Movies/**

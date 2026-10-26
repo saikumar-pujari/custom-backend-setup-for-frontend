@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}StreamHub - Movies, Series & Races{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div style="display: flex; align-items: center; gap: 2rem;">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 6.47v11.06c0 1.15 1.25 1.87 2.25 1.3l9.53-5.53c1-.58 1-2.02 0-2.6L6.25 5.17C5.25 4.6 4 5.32 4 6.47z"/></svg>
+        </div>
+        <span>STREAM<span style="color: var(--accent-red);">HUB</span></span>
+        <span class="brand-badge">PRO</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">
+            <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Browse
+          </a></li>
+          <li><a href="/manage/" class="nav-link {% if '/manage' in request.path %}active{% endif %}">
+            <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+            Manage Streams
+          </a></li>
+          <li><a href="/admin/" target="_blank" class="nav-link">
+            <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            Django Admin
+          </a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Live Providers Bar in Header -->
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <a href="https://streameasto.cx/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="border-color: rgba(225, 6, 0, 0.4); color: #ff5252; background: rgba(225, 6, 0, 0.1);" title="Open StreamEast Live Sports in new tab">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff2a54;"></span>
+        StreamEast Sports ↗
+      </a>
+      <a href="http://flixto.watch/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="border-color: rgba(0, 229, 255, 0.4); color: #00e5ff; background: rgba(0, 229, 255, 0.1);" title="Open Flixto Movies & Series in new tab">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#00e5ff;"></span>
+        Flixto Movies ↗
+      </a>
+    </div>
+
+    <div class="nav-actions">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" id="globalSearchInput" placeholder="Search movies, series, races..." aria-label="Search movies, series and races">
+      </div>
+
+      <button class="btn btn-primary" id="openAddStreamBtn" type="button">
+        <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        <span>Add Stream</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Global "Add Stream / Bookmark" Dialog Modal -->
+  <dialog id="addStreamModal" class="stream-modal">
+    <div class="modal-header" style="background-image: linear-gradient(135deg, #1f253d, #141727); min-height: 110px;">
+      <button class="modal-close-btn" type="button" aria-label="Close dialog" onclick="closeAddStreamModal()">✕</button>
+      <div class="modal-title-wrap">
+        <span class="badge badge-f1">Quick Add</span>
+        <h2 style="font-size: 1.5rem; margin-top: 0.3rem;">Add Movie, Series, or Race Stream</h2>
+      </div>
+    </div>
+    <div class="modal-body">
+      <!-- Quick Provider Selector Bar inside modal -->
+      <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem 1rem; margin-bottom: 1.25rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.5rem;">
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">Choose Stream Source Site:</span>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="setModalProvider('streameast')">
+              🏎️ StreamEast (Sports)
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="setModalProvider('flixto')">
+              🍿 Flixto (Movies)
+            </button>
+          </div>
+        </div>
+        <select id="modalProviderSelect" class="form-control" style="font-size: 0.82rem; padding: 0.4rem 0.75rem;">
+          <option value="">-- Or Choose From 30+ Verified Live Sites (Bollyflix, Vegamovies, Cinevood, etc.) --</option>
+        </select>
+      </div>
+
+      <form id="addStreamForm">
+        <input type="hidden" id="addTmdbId">
+        <div class="form-grid-2">
+          <div class="form-group" style="position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+              <label class="form-label" for="addTitle" style="margin-bottom: 0;">Title / Event Name *</label>
+              <button type="button" class="btn btn-secondary btn-sm" id="tmdbFetchBtn" onclick="searchTmdbModal()" style="font-size: 0.75rem; padding: 2px 7px;">
+                ⚡ Auto-fill Info from TMDb
+              </button>
+            </div>
+            <div class="tmdb-autocomplete-wrapper">
+              <input type="text" id="addTitle" class="form-control" placeholder="e.g. Inception, Stranger Things, F1 Monza" required autocomplete="off">
+              <div id="addTitleSuggestions" class="tmdb-suggestions-dropdown"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="addMediaType">Type *</label>
+            <select id="addMediaType" class="form-control" required onchange="onModalTypeChange(this.value)">
+              <option value="movie">Movie</option>
+              <option value="series">TV Series</option>
+              <option value="race">Motorsport / Race</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label class="form-label" for="addCategory">Sport / Genre</label>
+            <input type="text" id="addCategory" class="form-control" placeholder="e.g. Formula 1, Sci-Fi, MotoGP">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="addYear">Year / Date</label>
+            <input type="number" id="addYear" class="form-control" placeholder="2026" value="2026">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="addQuality">Quality</label>
+            <select id="addQuality" class="form-control">
+              <option value="1080p 60FPS">1080p 60FPS (Race / High-FPS)</option>
+              <option value="4K Ultra HD">4K Ultra HD</option>
+              <option value="1080p FHD" selected>1080p FHD</option>
+              <option value="720p HD">720p HD</option>
+              <option value="Live Stream">Live Stream</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="addPoster">Poster / Thumbnail Image URL</label>
+            <input type="url" id="addPoster" class="form-control" placeholder="https://image-url... (Leave blank for default auto-art)">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="addDuration">Duration / Session</label>
+            <input type="text" id="addDuration" class="form-control" placeholder="e.g. 2h 15m or 57 Laps">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="addDescription">Description / Synopsis</label>
+          <textarea id="addDescription" class="form-control" rows="2" placeholder="Summary or details about this stream..."></textarea>
+        </div>
+
+        <!-- Stream Source Links Section -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
+            <h4 style="color: var(--accent-cyan); display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem;">
+              <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+              Streaming Source Website Link(s)
+            </h4>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="btn btn-secondary btn-sm" id="openExternalSiteHelperBtn" onclick="openCurrentProviderSite()" style="font-size: 0.78rem;">
+                ↗ Open Streaming Site to Copy Link
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" id="addMoreSourceBtn">+ Add Mirror Server</button>
+            </div>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 0.85rem;">
+            Paste the destination URL from Flixto (for movies/series) or StreamEast (for sports/races), or any custom site.
+          </p>
+
+          <div id="sourcesContainer">
+            <div class="source-row" style="display: grid; grid-template-columns: 160px 1fr auto; gap: 0.6rem; margin-bottom: 0.6rem;">
+              <input type="text" class="form-control src-server" placeholder="Server Name" value="Flixto Stream">
+              <input type="url" class="form-control src-url" placeholder="http://flixto.watch/..." value="http://flixto.watch/" required>
+              <button type="button" class="btn btn-danger btn-sm remove-src-btn" style="visibility: hidden;">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeAddStreamModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveStreamSubmitBtn">Save & Add to Hub</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Watch & Sources Detail Modal -->
+  <dialog id="watchModal" class="stream-modal">
+    <div id="watchModalHeader" class="modal-header">
+      <button class="modal-close-btn" type="button" aria-label="Close dialog" onclick="closeWatchModal()">✕</button>
+      <div class="modal-header-overlay"></div>
+      <div class="modal-title-wrap">
+        <div id="modalBadges" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;"></div>
+        <h2 id="modalTitle" style="font-size: 2rem; color: #fff;"></h2>
+        <div id="modalMeta" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem;"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <!-- Direct In-Site Embedded Video Player -->
+      <div id="embedPlayerBox" style="display: none; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #0c0e18; padding: 0.5rem 0.85rem; border-radius: var(--radius-sm) var(--radius-sm) 0 0; border: 1px solid var(--border-color); border-bottom: none; flex-wrap: wrap; gap: 0.5rem;">
+          <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;" id="playerServerTabs">
+            <span style="font-size: 0.78rem; color: var(--text-dim); font-weight: 600;">Stream Directly:</span>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closePlayerBox()" style="padding: 2px 8px; font-size: 0.75rem;">
+            ✕ Close Player
+          </button>
+        </div>
+        <div class="embed-player-container" style="border-radius: 0 0 var(--radius-sm) var(--radius-sm); margin-bottom: 0;">
+          <iframe id="embedFrame" src="" allowfullscreen allow="autoplay; fullscreen; encrypted-media; picture-in-picture"></iframe>
+        </div>
+      </div>
+
+      <p id="modalDesc" style="color: #d1d5db; line-height: 1.6; margin-bottom: 1.5rem;"></p>
+
+      <!-- Stream Servers Box -->
+      <div class="stream-servers-box">
+        <div class="servers-header">
+          <div>
+            <h3 style="font-size: 1.15rem; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
+              <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;"></span>
+              Available Streaming Sources (<span id="sourceCountSpan">0</span>)
+            </h3>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+              Clicking a server opens the movie or race directly on the streaming website.
+            </p>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="modalAddServerBtn" type="button">+ Add Server Link</button>
+        </div>
+
+        <div id="serversList" class="servers-list">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Inline Form to quickly add a source link to this movie/race -->
+        <form id="inlineAddSourceForm" style="display:none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-color);">
+          <h4 style="font-size: 0.9rem; color: var(--accent-cyan); margin-bottom: 0.6rem;">Add New Stream Link to this Title</h4>
+          <div style="display: grid; grid-template-columns: 160px 1fr 100px auto; gap: 0.6rem;">
+            <input type="text" id="inlineServerName" class="form-control" placeholder="Server Name" value="Mirror 2" required>
+            <input type="url" id="inlineStreamUrl" class="form-control" placeholder="https://streaming-site.com/movie-link" required>
+            <input type="text" id="inlineQuality" class="form-control" placeholder="1080p" value="1080p">
+            <button type="submit" class="btn btn-primary btn-sm">Add</button>
+          </div>
+        </form>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+        <button type="button" class="btn btn-danger btn-sm" id="modalDeleteBtn">Delete Stream</button>
+        <button type="button" class="btn btn-secondary" onclick="closeWatchModal()">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="{% static 'js/app.js' %}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

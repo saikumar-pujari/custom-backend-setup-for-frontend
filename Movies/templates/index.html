@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Featured Streaming Sites Quick Launch Bar -->
+<section style="margin: 1.25rem 2rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem;">
+  <!-- NetMirror Card -->
+  <div style="background: linear-gradient(135deg, rgba(229, 9, 20, 0.14), rgba(18, 22, 36, 0.95)); border: 1px solid rgba(229, 9, 20, 0.4); border-radius: var(--radius-md); padding: 1.15rem 1.4rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    <div style="display: flex; align-items: center; gap: 0.9rem;">
+      <div style="width: 44px; height: 44px; border-radius: 10px; background: #e50914; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(229, 9, 20, 0.5); font-weight: 900; color: #fff; font-size: 1.2rem; font-family: sans-serif;">
+        N
+      </div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <h3 style="color: #fff; font-size: 1.05rem; font-weight: 700;">NetMirror</h3>
+          <span class="badge" style="background: rgba(229,9,20,0.25); color: #ff5252; border: 1px solid rgba(229,9,20,0.4);">NETFLIX &amp; OTT</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">
+          Fast OTT Series, Movies &amp; Originals Mirror (net77.cc)
+        </p>
+      </div>
+    </div>
+    <a href="https://net77.cc/home" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="background: linear-gradient(135deg, #e50914, #b20710); white-space: nowrap;">
+      <span>Visit NetMirror ↗</span>
+    </a>
+  </div>
+
+  <!-- StreamEast Card -->
+  <div style="background: linear-gradient(135deg, rgba(225, 6, 0, 0.12), rgba(18, 22, 36, 0.95)); border: 1px solid rgba(225, 6, 0, 0.35); border-radius: var(--radius-md); padding: 1.15rem 1.4rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    <div style="display: flex; align-items: center; gap: 0.9rem;">
+      <div style="width: 44px; height: 44px; border-radius: 10px; background: #e10600; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(225, 6, 0, 0.5);">
+        <svg style="width: 22px; height: 22px; fill: #fff;" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.08 3.11H5.77L6.85 7zM19 17H5v-4.66l.12-.34h13.77l.11.34V17z"/></svg>
+      </div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <h3 style="color: #fff; font-size: 1.05rem; font-weight: 700;">StreamEast</h3>
+          <span class="badge badge-live">SPORTS &amp; RACES</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">
+          Formula 1, MotoGP, UFC &amp; Motorsport Live Streams
+        </p>
+      </div>
+    </div>
+    <a href="https://streameasto.cx/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="background: linear-gradient(135deg, #e10600, #ff2a54); white-space: nowrap;">
+      <span>Visit StreamEast ↗</span>
+    </a>
+  </div>
+
+  <!-- Flixto Card -->
+  <div style="background: linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(18, 22, 36, 0.95)); border: 1px solid rgba(0, 229, 255, 0.35); border-radius: var(--radius-md); padding: 1.15rem 1.4rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    <div style="display: flex; align-items: center; gap: 0.9rem;">
+      <div style="width: 44px; height: 44px; border-radius: 10px; background: #00b4d8; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);">
+        <svg style="width: 22px; height: 22px; fill: #fff;" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+      </div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <h3 style="color: #fff; font-size: 1.05rem; font-weight: 700;">Flixto</h3>
+          <span class="badge badge-movie">MOVIES &amp; SERIES</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">
+          Cinema Blockbusters &amp; HD Video Streaming Library
+        </p>
+      </div>
+    </div>
+    <a href="http://flixto.watch/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="background: linear-gradient(135deg, #00b4d8, #0077b6); white-space: nowrap;">
+      <span>Visit Flixto ↗</span>
+    </a>
+  </div>
+
+  <!-- Cinejoy Card -->
+  <div style="background: linear-gradient(135deg, rgba(149, 255, 80, 0.12), rgba(18, 22, 36, 0.95)); border: 1px solid rgba(149, 255, 80, 0.35); border-radius: var(--radius-md); padding: 1.15rem 1.4rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    <div style="display: flex; align-items: center; gap: 0.9rem;">
+      <div style="width: 44px; height: 44px; border-radius: 10px; background: #95FF50; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(149, 255, 80, 0.4); font-weight: 900; color: #000; font-size: 1.25rem; font-family: sans-serif;">
+        CJ
+      </div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <h3 style="color: #fff; font-size: 1.05rem; font-weight: 700;">Cinejoy</h3>
+          <span class="badge" style="background: rgba(149, 255, 80, 0.2); color: #95FF50; border: 1px solid rgba(149, 255, 80, 0.4);">4K / HD MOVIES</span>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">
+          Fast Movies &amp; TV Series Portal (cinejoy.pk)
+        </p>
+      </div>
+    </div>
+    <a href="https://cinejoy.pk/search" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="background: linear-gradient(135deg, #95FF50, #60c520); color: #000; font-weight: 700; white-space: nowrap;">
+      <span>Visit Cinejoy ↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- Hero Featured Banner -->
+<section id="heroSection" class="hero" style="display: none;">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge-wrap">
+      <span id="heroTypeBadge" class="badge"></span>
+      <span id="heroQualityBadge" class="badge badge-quality"></span>
+      <span id="heroRatingBadge" class="badge badge-rating"></span>
+    </div>
+    <h1 id="heroTitle" class="hero-title"></h1>
+    <div id="heroMeta" class="hero-meta"></div>
+    <p id="heroDesc" class="hero-desc"></p>
+    <div class="hero-actions">
+      <button id="heroWatchBtn" class="btn btn-primary" type="button">
+        <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <span>Watch Stream</span>
+      </button>
+      <button id="heroSourcesBtn" class="btn btn-secondary" type="button">
+        <span>Available Links</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Content Hub Section -->
+<div class="content-container">
+  <!-- Filter & Navigation Bar -->
+  <div class="filters-bar">
+    <div class="type-tabs" role="tablist">
+      <button class="type-tab active" data-type="all" role="tab" aria-selected="true">
+        All Streams <span class="type-tab-count" id="countAll">0</span>
+      </button>
+      <button class="type-tab" data-type="movie" role="tab" aria-selected="false">
+        Movies <span class="type-tab-count" id="countMovies">0</span>
+      </button>
+      <button class="type-tab" data-type="series" role="tab" aria-selected="false">
+        TV Series <span class="type-tab-count" id="countSeries">0</span>
+      </button>
+      <button class="type-tab" data-type="race" role="tab" aria-selected="false">
+        Races & Motorsport <span class="type-tab-count" id="countRaces">0</span>
+      </button>
+    </div>
+
+    <!-- Quick Genre / Category Filter Chips -->
+    <div class="genre-chips" id="genreChipsBar">
+      <button class="genre-chip active" data-cat="all">All Genres</button>
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+
+  <!-- Status / Search indicator -->
+  <div id="filterStatus" style="margin-bottom: 1rem; color: var(--text-dim); font-size: 0.9rem; display: none;"></div>
+
+  <!-- Multi-Provider Global Search Results Container -->
+  <div id="globalSearchResults" style="display: none; margin-bottom: 3rem;">
+    <!-- Populated dynamically when search is active -->
+  </div>
+
+  <!-- Media Grid -->
+  <div id="mediaGrid" class="media-grid">
+    <!-- Populated dynamically via JS from /api/media/ -->
+  </div>
+
+  <!-- Empty State -->
+  <div id="emptyState" style="display: none; text-align: center; padding: 4rem 1rem;">
+    <div style="width: 70px; height: 70px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+      <svg style="width: 32px; height: 32px; fill: var(--text-dim);" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+    </div>
+    <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.5rem;">No streams found</h3>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto;">
+      We couldn't find any movies, series, or races matching your criteria. You can add one right now!
+    </p>
+    <button class="btn btn-primary" onclick="openAddStreamModal()">+ Add New Stream</button>
+  </div>
+</div>
+{% endblock %}

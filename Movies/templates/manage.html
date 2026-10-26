@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Streams & Reference Links - StreamHub{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <div class="manage-header">
+    <div>
+      <h1 style="font-size: 2rem; color: #fff; font-weight: 800;">Manage Stream Links & Providers</h1>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem;">
+        Add movies, series, and race links from <strong style="color:#00e5ff;">Flixto</strong> and <strong style="color:#ff2a54;">StreamEast</strong>, or any custom website.
+      </p>
+    </div>
+    <div style="display: flex; gap: 0.75rem;">
+      <a href="/" class="btn btn-secondary">
+        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Back to Portal
+      </a>
+      <button class="btn btn-primary" onclick="focusAddStreamForm()">
+        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Add New Stream Link
+      </button>
+    </div>
+  </div>
+
+  <!-- Connected Streaming Providers Banner -->
+  <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">
+      <h3 style="color: #fff; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+        <svg style="width:18px;height:18px;fill:var(--accent-cyan)" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        Active Streaming Website Portals
+      </h3>
+      <span style="font-size: 0.8rem; color: var(--text-dim);">Click to visit or open to copy direct URLs</span>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;" id="providersListContainer">
+      <div style="background: var(--bg-secondary); border: 1px solid rgba(229, 9, 20, 0.35); border-radius: var(--radius-sm); padding: 0.85rem 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.4rem;">
+            <strong style="color: #fff;">NetMirror</strong>
+            <span class="badge" style="background: rgba(229,9,20,0.25); color: #ff5252; font-size: 0.65rem;">NETFLIX &amp; OTT</span>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">https://net77.cc/home</div>
+        </div>
+        <a href="https://net77.cc/home" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="border-color: #e50914; color: #ff5252;">
+          ↗ Open Site
+        </a>
+      </div>
+
+      <div style="background: var(--bg-secondary); border: 1px solid rgba(225, 6, 0, 0.3); border-radius: var(--radius-sm); padding: 0.85rem 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.4rem;">
+            <strong style="color: #fff;">StreamEast</strong>
+            <span class="badge badge-live" style="font-size: 0.65rem;">SPORTS / RACE</span>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">https://streameasto.cx/</div>
+        </div>
+        <a href="https://streameasto.cx/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+          ↗ Open Site
+        </a>
+      </div>
+
+      <div style="background: var(--bg-secondary); border: 1px solid rgba(0, 229, 255, 0.3); border-radius: var(--radius-sm); padding: 0.85rem 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.4rem;">
+            <strong style="color: #fff;">Flixto</strong>
+            <span class="badge badge-movie" style="font-size: 0.65rem;">MOVIES / SERIES</span>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">http://flixto.watch/</div>
+        </div>
+        <a href="http://flixto.watch/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+          ↗ Open Site
+        </a>
+      </div>
+
+      <div style="background: var(--bg-secondary); border: 1px solid rgba(149, 255, 80, 0.35); border-radius: var(--radius-sm); padding: 0.85rem 1.1rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.4rem;">
+            <strong style="color: #fff;">Cinejoy</strong>
+            <span class="badge" style="background: rgba(149, 255, 80, 0.2); color: #95FF50; font-size: 0.65rem;">MOVIES / SERIES</span>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 2px;">https://cinejoy.pk/search</div>
+        </div>
+        <a href="https://cinejoy.pk/search" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="border-color: #95FF50; color: #95FF50;">
+          ↗ Open Site
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(255, 42, 84, 0.15); color: var(--accent-red);">
+        <svg style="width:26px;height:26px;fill:currentColor" viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/></svg>
+      </div>
+      <div>
+        <div class="stat-val" id="statTotalMedia">0</div>
+        <div class="stat-lbl">Total Titles Indexed</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(0, 229, 255, 0.15); color: var(--accent-cyan);">
+        <svg style="width:26px;height:26px;fill:currentColor" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+      </div>
+      <div>
+        <div class="stat-val" id="statMovies">0</div>
+        <div class="stat-lbl">Movies</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(157, 78, 221, 0.15); color: var(--accent-purple);">
+        <svg style="width:26px;height:26px;fill:currentColor" viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+      </div>
+      <div>
+        <div class="stat-val" id="statSeries">0</div>
+        <div class="stat-lbl">TV Series</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(225, 6, 0, 0.15); color: #ff3b30;">
+        <svg style="width:26px;height:26px;fill:currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.08 3.11H5.77L6.85 7zM19 17H5v-4.66l.12-.34h13.77l.11.34V17z"/></svg>
+      </div>
+      <div>
+        <div class="stat-val" id="statRaces">0</div>
+        <div class="stat-lbl">Races & Motorsport</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+        <svg style="width:26px;height:26px;fill:currentColor" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+      </div>
+      <div>
+        <div class="stat-val" id="statSources">0</div>
+        <div class="stat-lbl">Streaming Server Links</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dedicated Add Stream Panel -->
+  <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; margin-bottom: 3rem;" id="addStreamPanel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h2 style="font-size: 1.4rem; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="display: inline-block; width: 8px; height: 24px; background: var(--accent-red); border-radius: 4px;"></span>
+          Add New Movie, Series, or Race Stream Link
+        </h2>
+        <p style="color: var(--text-dim); font-size: 0.88rem; margin-top: 0.2rem;">
+          Connect links from <strong>StreamEast</strong> (for races/sports) or <strong>Flixto</strong> (for movies/shows).
+        </p>
+      </div>
+
+      <!-- Quick Template Autofill Buttons -->
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center;">Quick Provider Presets:</span>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="applyPreset('streameast_f1')">🏎️ StreamEast: F1 Race</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="applyPreset('streameast_motogp')">🏍️ StreamEast: MotoGP</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="applyPreset('flixto_movie')">🎬 Flixto: Movie</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="applyPreset('flixto_series')">📺 Flixto: TV Series</button>
+      </div>
+    </div>
+
+    <form id="dedicatedAddForm">
+      <input type="hidden" id="pageAddTmdbId">
+      <div class="form-grid-3">
+        <div class="form-group" style="position: relative;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <label class="form-label" for="pageAddTitle" style="margin-bottom: 0;">Title or Event Name *</label>
+            <button type="button" class="btn btn-secondary btn-sm" id="pageTmdbFetchBtn" onclick="searchTmdbPage()" style="font-size: 0.72rem; padding: 2px 6px;">
+              ⚡ TMDb Auto-Fill
+            </button>
+          </div>
+          <div class="tmdb-autocomplete-wrapper">
+            <input type="text" id="pageAddTitle" class="form-control" placeholder="e.g. Inception, Stranger Things, F1 Monza" required autocomplete="off">
+            <div id="pageTitleSuggestions" class="tmdb-suggestions-dropdown"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pageAddType">Content Type *</label>
+          <select id="pageAddType" class="form-control" required onchange="handleTypeChange(this.value)">
+            <option value="race">Motorsport / Race</option>
+            <option value="movie">Movie</option>
+            <option value="series">TV Series</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pageAddCategory">Category / Sport *</label>
+          <input type="text" id="pageAddCategory" class="form-control" placeholder="e.g. Formula 1, MotoGP, Action" value="Formula 1, Motorsport" required>
+        </div>
+      </div>
+
+      <div class="form-grid-3">
+        <div class="form-group">
+          <label class="form-label" for="pageAddYear">Year / Event Date</label>
+          <input type="number" id="pageAddYear" class="form-control" value="2026">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pageAddDuration">Duration / Session Info</label>
+          <input type="text" id="pageAddDuration" class="form-control" placeholder="e.g. 52 Laps or 2h 15m" value="Race (52 Laps)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pageAddQuality">Broadcast Quality</label>
+          <select id="pageAddQuality" class="form-control">
+            <option value="1080p 60FPS" selected>1080p 60FPS (Ultra Smooth / Sports)</option>
+            <option value="4K Ultra HD">4K Ultra HD</option>
+            <option value="1080p FHD">1080p FHD</option>
+            <option value="720p HD">720p HD</option>
+            <option value="Live Stream">Live Stream Feed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label" for="pageAddPoster">Poster Image URL (Optional)</label>
+          <input type="url" id="pageAddPoster" class="form-control" placeholder="https://... (Leave blank for default poster)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pageAddRating">Rating / Priority (1 - 10)</label>
+          <input type="number" step="0.1" min="1" max="10" id="pageAddRating" class="form-control" value="9.0">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="pageAddDesc">Description / Event Details</label>
+        <textarea id="pageAddDesc" class="form-control" rows="2" placeholder="Synopsis, circuit details, or movie summary..."></textarea>
+      </div>
+
+      <!-- Multiple Streaming Mirrors Container -->
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+          <h4 style="color: var(--accent-cyan); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+            Streaming Website Links / Mirrors
+          </h4>
+          <div style="display: flex; gap: 0.5rem;">
+            <a href="https://streameasto.cx/" id="helperLinkSports" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="font-size: 0.78rem;">
+              ↗ Open StreamEast
+            </a>
+            <a href="http://flixto.watch/" id="helperLinkMovies" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="font-size: 0.78rem;">
+              ↗ Open Flixto
+            </a>
+            <button type="button" class="btn btn-secondary btn-sm" id="pageAddMoreSrcBtn">+ Add Mirror Server</button>
+          </div>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1rem;">
+          Paste the streaming page URL. When clicked in your portal, it opens the movie or race directly on that site!
+        </p>
+
+        <div id="pageSourcesContainer">
+          <div class="source-row" style="display: grid; grid-template-columns: 180px 1fr 140px auto; gap: 0.75rem; margin-bottom: 0.75rem;">
+            <input type="text" class="form-control src-server" placeholder="Server Name" value="StreamEast Live" required>
+            <input type="url" class="form-control src-url" placeholder="https://streameasto.cx/..." value="https://streameasto.cx/" required>
+            <input type="text" class="form-control src-notes" placeholder="Notes (e.g. 1080p 60fps)" value="Live Stream">
+            <button type="button" class="btn btn-danger btn-sm remove-src-btn" style="visibility: hidden;">✕</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+        <button type="reset" class="btn btn-secondary">Reset Fields</button>
+        <button type="submit" class="btn btn-primary" id="pageSubmitBtn">Save Stream to Hub</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Indexed Streams Table -->
+  <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <h2 style="font-size: 1.4rem; color: #fff;">Indexed Titles & Streaming Websites</h2>
+    <div style="display: flex; gap: 0.75rem;">
+      <input type="text" id="manageSearchInput" class="form-control" style="width: 260px;" placeholder="Filter list...">
+      <select id="manageTypeFilter" class="form-control" style="width: 140px;">
+        <option value="all">All Types</option>
+        <option value="movie">Movies</option>
+        <option value="series">Series</option>
+        <option value="race">Races</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="data-table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width: 60px;">Poster</th>
+          <th>Title & Category</th>
+          <th>Type</th>
+          <th>Year / Date</th>
+          <th>Quality</th>
+          <th>Streaming Source(s)</th>
+          <th style="text-align: right;">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="manageTableBody">
+        <!-- Dynamically rendered -->
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/manage.js' %}"></script>
+{% endblock %}
